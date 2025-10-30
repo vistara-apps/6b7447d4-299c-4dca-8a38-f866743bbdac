@@ -1,16 +1,34 @@
 'use client';
 
 import { useState } from 'react';
-import { Coins, Sparkles } from 'lucide-react';
+import { Coins, Sparkles, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import WalletConnect from './WalletConnect';
+import { useX402Payment } from '../hooks/useX402Payment';
+
+// Default streamer address - this should be configured per streamer
+const STREAMER_ADDRESS = '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb1'; // Example address
 
 export default function TipJarScreen() {
   const [tipAmount, setTipAmount] = useState('');
   const [message, setMessage] = useState('');
+  const { sendPayment, status, resetStatus, isConnected } = useX402Payment();
 
-  const handleTip = () => {
-    // Transaction logic will be implemented here
-    console.log('Sending tip:', { amount: tipAmount, message });
+  const handleTip = async () => {
+    if (!tipAmount || parseFloat(tipAmount) < 0.1) {
+      return;
+    }
+
+    const result = await sendPayment({
+      amount: tipAmount,
+      recipientAddress: STREAMER_ADDRESS,
+      message,
+    });
+
+    if (result.success) {
+      // Clear form on success
+      setTipAmount('');
+      setMessage('');
+    }
   };
 
   return (
@@ -51,13 +69,70 @@ export default function TipJarScreen() {
         {/* Wallet Connect */}
         <WalletConnect />
 
+        {/* Transaction Status */}
+        {status.isProcessing && (
+          <div className="card mt-6 bg-blue-500/10 border-blue-500/20">
+            <div className="flex items-center gap-3">
+              <Loader2 className="animate-spin text-blue-400" size={20} />
+              <div>
+                <p className="font-semibold text-blue-400">Processing Payment...</p>
+                <p className="text-sm text-muted">Please wait while we process your transaction</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {status.isSuccess && status.txHash && (
+          <div className="card mt-6 bg-green-500/10 border-green-500/20">
+            <div className="flex items-start gap-3">
+              <CheckCircle2 className="text-green-400 flex-shrink-0 mt-1" size={20} />
+              <div className="flex-1">
+                <p className="font-semibold text-green-400 mb-2">Payment Successful! 🎉</p>
+                <p className="text-sm text-muted mb-2">Your tip has been sent to the streamer</p>
+                <a
+                  href={`https://basescan.org/tx/${status.txHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-primary hover:text-accent transition-colors break-all"
+                >
+                  View on Basescan: {status.txHash.slice(0, 10)}...{status.txHash.slice(-8)}
+                </a>
+              </div>
+              <button
+                onClick={resetStatus}
+                className="text-xs text-muted hover:text-fg transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
+
+        {status.error && (
+          <div className="card mt-6 bg-red-500/10 border-red-500/20">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="text-red-400 flex-shrink-0 mt-1" size={20} />
+              <div className="flex-1">
+                <p className="font-semibold text-red-400 mb-1">Payment Failed</p>
+                <p className="text-sm text-muted">{status.error}</p>
+              </div>
+              <button
+                onClick={resetStatus}
+                className="text-xs text-muted hover:text-fg transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Tip Form */}
         <div className="card mt-6">
           <h3 className="text-lg font-semibold mb-4">Send a Tip</h3>
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-muted mb-2">Amount (USD)</label>
+              <label className="block text-sm text-muted mb-2">Amount (USDC on Base)</label>
               <input
                 type="number"
                 value={tipAmount}
@@ -66,7 +141,9 @@ export default function TipJarScreen() {
                 step="0.01"
                 min="0.1"
                 className="input-field"
+                disabled={!isConnected || status.isProcessing}
               />
+              <p className="text-xs text-muted mt-1">Minimum: 0.10 USDC</p>
             </div>
 
             <div>
@@ -77,16 +154,33 @@ export default function TipJarScreen() {
                 placeholder="Say something nice..."
                 rows={3}
                 className="input-field resize-none"
+                disabled={!isConnected || status.isProcessing}
               />
             </div>
 
             <button
               onClick={handleTip}
-              disabled={!tipAmount || parseFloat(tipAmount) < 0.1}
-              className="btn-primary w-full"
+              disabled={!isConnected || !tipAmount || parseFloat(tipAmount) < 0.1 || status.isProcessing}
+              className="btn-primary w-full flex items-center justify-center gap-2"
             >
-              Send Tip
+              {status.isProcessing ? (
+                <>
+                  <Loader2 className="animate-spin" size={20} />
+                  Processing...
+                </>
+              ) : (
+                <>
+                  <Coins size={20} />
+                  Send Tip
+                </>
+              )}
             </button>
+            
+            {!isConnected && (
+              <p className="text-xs text-center text-muted">
+                Please connect your wallet to send tips
+              </p>
+            )}
           </div>
         </div>
 
