@@ -1,0 +1,16 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjkxNTIsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwMmVmNzkwRGQ3OTkzQTM1ZkQ4NDdDMDUzRURkQUU5NDBEMDU1NTk2In0",
+    "payload": "eyJkb21haW4iOiJzdHJlYW1lcnRpcGtpdC5ldGgifQ",
+    "signature": "MHgxMGQwZGU4ZGYwZDUwZTdmMGIxN2YxMTU2NDI1MjRmZTY0MTUyZGU4ZGU1MWU0MThiYjU4ZjVmZmQxYjRjNDBiNGVlZTRhNDcwNmVmNjhlMzQ0ZGQ5MDBkYmQyMmNlMmVlZGY5ZGQ0N2JlNWRmNzMwYzUxNjE4OWVjZDJjY2Y0MDFj"
+  },
+  "frame": {
+    "version": "next",
+    "name": "StreamerTipKit",
+    "iconUrl": "https://streamertipkit.farcaster.xyz/icon-256x256.png",
+    "splashImageUrl": "https://streamertipkit.farcaster.xyz/splash-200x200.png",
+    "splashBackgroundColor": "#2e0f6d",
+    "homeUrl": "https://streamertipkit.farcaster.xyz/app",
+    "webhookUrl": "https://api.streamertipkit.xyz/webhooks/farcaster"
+  }
+}
