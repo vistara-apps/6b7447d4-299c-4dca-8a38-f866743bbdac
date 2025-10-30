@@ -1,11 +1,28 @@
 'use client';
 
-import { Wallet } from 'lucide-react';
+import { Wallet, CheckCircle } from 'lucide-react';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 
 export default function WalletConnect() {
+  const { address, isConnected } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
+
   const handleConnect = () => {
-    // OnchainKit wallet connection will be implemented here
-    console.log('Connecting wallet...');
+    if (isConnected) {
+      disconnect();
+    } else {
+      const coinbaseConnector = connectors.find(
+        (connector) => connector.id === 'coinbaseWalletSDK'
+      );
+      if (coinbaseConnector) {
+        connect({ connector: coinbaseConnector });
+      }
+    }
+  };
+
+  const formatAddress = (addr: string) => {
+    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   };
 
   return (
@@ -13,8 +30,17 @@ export default function WalletConnect() {
       onClick={handleConnect}
       className="btn-secondary w-full flex items-center justify-center gap-2"
     >
-      <Wallet size={20} />
-      Connect your BSC Wallet
+      {isConnected ? (
+        <>
+          <CheckCircle size={20} className="text-green-500" />
+          <span>Connected: {address && formatAddress(address)}</span>
+        </>
+      ) : (
+        <>
+          <Wallet size={20} />
+          <span>Connect your Wallet</span>
+        </>
+      )}
     </button>
   );
 }
