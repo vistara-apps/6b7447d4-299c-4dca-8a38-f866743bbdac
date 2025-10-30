@@ -1,0 +1,14 @@
+{
+  "name": "StreamerTipKit",
+  "description": "StreamerTipKit is a Base Mini App built with Zara.",
+  "image": "https://dummyimage.com/1200x628/0a0b0d/ffffff.png&text=OG",
+  "external_url": "https://6b7447d4-299c-4dca-8a38-f866743bbdac.vercel.app",
+  "properties": {
+    "app": {
+      "name": "StreamerTipKit",
+      "description": "StreamerTipKit is a Base Mini App built with Zara.",
+      "url": "https://6b7447d4-299c-4dca-8a38-f866743bbdac.vercel.app",
+      "icon": "https://0co.to/images/zara-2.png"
+    }
+  }
+}

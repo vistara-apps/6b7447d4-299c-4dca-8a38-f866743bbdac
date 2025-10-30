@@ -10,7 +10,7 @@
     "iconUrl": "https://streamertipkit.farcaster.xyz/icon-256x256.png",
     "splashImageUrl": "https://streamertipkit.farcaster.xyz/splash-200x200.png",
     "splashBackgroundColor": "#2e0f6d",
-    "homeUrl": "https://streamertipkit.farcaster.xyz/app",
-    "webhookUrl": "https://api.streamertipkit.xyz/webhooks/farcaster"
+    "homeUrl": "https://app-743bbdac-9qxa.vercel.app",
+    "webhookUrl": "https://app-743bbdac-9qxa.vercel.app/api/webhook"
   }
 }
