@@ -23,16 +23,17 @@ export default function TipsScreen() {
       <div className="max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2">CONNECTS</h1>
-          <h2 className="text-3xl font-bold mb-2">TIPS</h2>
-          <p className="text-muted">To my BSC Chain</p>
+          <h1 className="text-4xl font-bold mb-2">TIP</h1>
+          <h2 className="text-3xl font-bold mb-2">HISTORY</h2>
+          <p className="text-muted">On Base Chain</p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <button className="card text-center hover:bg-opacity-80 transition-all duration-200">
             <DollarSign className="mx-auto mb-2 text-primary" size={24} />
-            <p className="text-2xl font-bold">0.1 1 More</p>
+            <p className="text-2xl font-bold">$10.50</p>
+            <p className="text-sm text-muted mt-1">Total Received</p>
           </button>
           
           <button className="card text-center hover:bg-opacity-80 transition-all duration-200">
@@ -52,7 +53,7 @@ export default function TipsScreen() {
             <Clock size={20} className="text-primary" />
             Real Time
           </h3>
-          <p className="text-sm text-muted mb-4">Come time donation</p>
+          <p className="text-sm text-muted mb-4">Live tip updates</p>
           
           {mockTips
             .filter(tip => tip.type === 'realtime')
@@ -86,7 +87,7 @@ export default function TipsScreen() {
                   </div>
                   <div>
                     <p className="font-semibold">{tip.username}</p>
-                    <p className="text-sm text-muted">Tone Code wallet</p>
+                    <p className="text-sm text-muted">Base Chain wallet</p>
                   </div>
                 </div>
                 <p className="text-xl font-bold">${tip.amount.toFixed(3)}</p>

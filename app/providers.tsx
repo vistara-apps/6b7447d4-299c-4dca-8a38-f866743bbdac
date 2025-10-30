@@ -2,20 +2,37 @@
 
 import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { WagmiProvider, createConfig, http } from 'wagmi';
 import { base } from 'wagmi/chains';
+import { coinbaseWallet } from 'wagmi/connectors';
 import { type ReactNode, useState } from 'react';
+
+const config = createConfig({
+  chains: [base],
+  connectors: [
+    coinbaseWallet({
+      appName: 'StreamerTipKit',
+      preference: 'smartWalletOnly',
+    }),
+  ],
+  transports: {
+    [base.id]: http(),
+  },
+});
 
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <OnchainKitProvider
-      apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY || 'cdp_demo_key'}
-      chain={base}
-    >
+    <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        {children}
+        <OnchainKitProvider
+          apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY || 'cdp_demo_key'}
+          chain={base}
+        >
+          {children}
+        </OnchainKitProvider>
       </QueryClientProvider>
-    </OnchainKitProvider>
+    </WagmiProvider>
   );
 }

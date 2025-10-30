@@ -39,12 +39,11 @@ export default function TipJarScreen() {
 
         {/* Info Section */}
         <div className="mb-6">
-          <h3 className="text-xl font-semibold mb-4">Connect 1 Tips</h3>
+          <h3 className="text-xl font-semibold mb-4">Support Your Favorite Streamers</h3>
           <p className="text-muted leading-relaxed mb-6">
-            Send <span className="text-primary font-semibold">crypto tips</span> from 0.1 USD eqst.
-            Live streamers sends instant to your in-cb. It be
-            Gallery your story from live streamer
-            connected with the BSC icon in live stream.
+            Send <span className="text-primary font-semibold">crypto tips</span> starting from just 0.10 USD.
+            Tips are delivered instantly to streamers on Base Chain.
+            Connect your wallet and show your support with a tip today!
           </p>
         </div>
 

@@ -1,20 +1,35 @@
 'use client';
 
-import { Wallet } from 'lucide-react';
+import {
+  ConnectWallet,
+  Wallet,
+  WalletDropdown,
+  WalletDropdownDisconnect,
+} from '@coinbase/onchainkit/wallet';
+import {
+  Address,
+  Avatar,
+  Name,
+  Identity,
+} from '@coinbase/onchainkit/identity';
 
 export default function WalletConnect() {
-  const handleConnect = () => {
-    // OnchainKit wallet connection will be implemented here
-    console.log('Connecting wallet...');
-  };
-
   return (
-    <button
-      onClick={handleConnect}
-      className="btn-secondary w-full flex items-center justify-center gap-2"
-    >
-      <Wallet size={20} />
-      Connect your BSC Wallet
-    </button>
+    <div className="w-full">
+      <Wallet>
+        <ConnectWallet className="btn-secondary w-full">
+          <Avatar className="h-6 w-6" />
+          <Name />
+        </ConnectWallet>
+        <WalletDropdown>
+          <Identity className="px-4 pt-3 pb-2">
+            <Avatar />
+            <Name />
+            <Address />
+          </Identity>
+          <WalletDropdownDisconnect />
+        </WalletDropdown>
+      </Wallet>
+    </div>
   );
 }
