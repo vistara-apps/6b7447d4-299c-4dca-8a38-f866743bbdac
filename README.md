@@ -16,7 +16,11 @@ Empowering streamers with onchain tips and Farcaster engagement.
 npm install
 ```
 
-2. Create `.env.local` from `.env.local.example` and add your OnchainKit API key
+2. Create `.env.local` from `.env.local.example` and add your OnchainKit API key:
+```bash
+cp .env.local.example .env.local
+# Edit .env.local and add your NEXT_PUBLIC_ONCHAINKIT_API_KEY
+```
 
 3. Run the development server:
 ```bash
@@ -24,6 +28,20 @@ npm run dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000)
+
+## X402 Payment Integration
+
+StreamerTipKit now includes full x402 payment protocol integration for USDC tips on Base. Features include:
+
+- **Wagmi Integration**: Uses `useWalletClient` for wallet connection and signing
+- **x402-axios**: Handles payment processing with proper authentication headers
+- **USDC on Base**: Native support for USDC payments on Base network
+- **Transaction Confirmation**: Real-time status updates and Basescan links
+- **Error Handling**: Comprehensive error handling with user-friendly messages
+
+For detailed implementation information, see [X402_IMPLEMENTATION.md](./X402_IMPLEMENTATION.md).
+
+For testing instructions, see [TESTING_CHECKLIST.md](./TESTING_CHECKLIST.md).
 
 ## Tech Stack
 
